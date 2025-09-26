@@ -1,0 +1,76 @@
+name: Erlang CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+# bundled rebar3 binary has limited erts compatibility, but images have working one in PATH
+env:
+  REBAR: rebar3
+
+permissions:
+  contents: read
+
+jobs:
+
+  ci-otp-latest:
+    runs-on: ubuntu-latest
+    container:
+      image: erlang:latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run tests
+      run: make ci-test
+
+  ci-otp28:
+    runs-on: ubuntu-latest
+    container:
+      image: erlang:28
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run tests
+      run: make ci-test
+
+  ci-otp27:
+    runs-on: ubuntu-latest
+    container:
+      image: erlang:27
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run tests
+      run: make ci-test
+
+  ci-otp26:
+    runs-on: ubuntu-latest
+    container:
+      image: erlang:26
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run tests
+      run: make ci-test-pre27
+
+  ci-otp25:
+    runs-on: ubuntu-latest
+    container:
+      image: erlang:25
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run tests
+      run: make ci-test-pre27
+
+  ci-otp24:
+    runs-on: ubuntu-latest
+    container:
+      image: erlang:24
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run tests
+      run: make ci-test-pre27
